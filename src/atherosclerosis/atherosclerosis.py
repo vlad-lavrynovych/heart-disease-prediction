@@ -80,8 +80,12 @@ plt.show()
 df['sex'] = df['sex'].map({'female': 1, 'male': 0})
 
 ################################## data preprocessing
-X = df.iloc[:, :-1].values
-y = df.iloc[:, -1].values
+X = df.iloc[:, 1:].values
+y = df.iloc[:, 0].values
+print("1 ===== ")
+print(df.iloc[:, 1:])
+print("2 ===== ")
+print(df.iloc[:, 0])
 
 from sklearn.model_selection import train_test_split
 
@@ -115,8 +119,6 @@ print('Accuracy for training set for svm = {}'.format((cm_train[0][0] + cm_train
 print('Accuracy for test set for svm = {}'.format((cm_test[0][0] + cm_test[1][1]) / len(y_test)))
 
 #########################################   Naive Bayes  #############################################################
-X = df.iloc[:, :-1].values
-y = df.iloc[:, -1].values
 
 from sklearn.model_selection import train_test_split
 
@@ -169,18 +171,20 @@ print('Accuracy for test set for Naive Bayes = {}'.format((cm_test[0][0] + cm_te
 # print('Accuracy for test set for Logistic Regression = {}'.format((cm_test[0][0] + cm_test[1][1]) / len(y_test)))
 
 #########################################   Decision Tree  #############################################################
-X = df.iloc[:, :-1].values
-y = df.iloc[:, -1].values
 
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
 from sklearn.tree import DecisionTreeClassifier
+from sklearn import tree
 
 classifier = DecisionTreeClassifier()
 classifier.fit(X_train, y_train)
-
+print(df.columns)
+dotfile = open("s.png", 'w')
+tree.export_graphviz(classifier, out_file = dotfile)
+dotfile.close()
 # Predicting the Test set results
 y_pred = classifier.predict(X_test)
 
@@ -196,8 +200,7 @@ print('Accuracy for training set for Decision Tree = {}'.format((cm_train[0][0] 
 print('Accuracy for test set for Decision Tree = {}'.format((cm_test[0][0] + cm_test[1][1]) / len(y_test)))
 
 #########################################  Random Forest  #############################################################
-X = df.iloc[:, :-1].values
-y = df.iloc[:, -1].values
+
 
 from sklearn.model_selection import train_test_split
 
